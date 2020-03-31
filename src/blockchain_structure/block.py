@@ -1,5 +1,7 @@
 import datetime
 import hashlib
+import uuid
+
 
 class Block:
 
@@ -11,7 +13,7 @@ class Block:
 
     @staticmethod
     def create_genesis_block():
-        return Block("0", "0", datetime.datetime.now())
+        return Block("000000000000000000000000000000000000000e", uuid.uuid1(), datetime.datetime.now())
 
     def get_hash(self):
         header_bin = (str(self.previous_block_hash) +
@@ -22,4 +24,7 @@ class Block:
         outer_hash = hashlib.sha256(inner_hash).hexdigest()
 
         return outer_hash
+
+    def validate_data(self, block):
+        return self.previous_block_hash == block.hash
 
